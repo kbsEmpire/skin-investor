@@ -77,6 +77,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // WHATSAPP BOOKING FORM
     // ========================================
     const bookingForm = document.getElementById('bookingForm');
+    const preferredDateInput = document.getElementById('preferredDate');
+    const preferredTimeInput = document.getElementById('preferredTime');
+    
+    // Set minimum date to today (block past dates)
+    if (preferredDateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        preferredDateInput.setAttribute('min', today);
+    }
     
     if (bookingForm) {
         bookingForm.addEventListener('submit', function(e) {
@@ -85,31 +93,57 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get form values
             const fullName = document.getElementById('fullName').value.trim();
             const location = document.getElementById('location').value.trim();
+            const preferredDate = document.getElementById('preferredDate').value;
+            const preferredTime = document.getElementById('preferredTime').value;
             
             // Validate inputs
-            if (!fullName || !location) {
+            if (!fullName || !location || !preferredDate || !preferredTime) {
                 alert('Please fill in all fields');
                 return;
             }
             
-            // Create WhatsApp message
-            const message = `Hello The Skin Investor 🌿,
+            // Validate weekend booking
+            const selectedDate = new Date(preferredDate);
+            const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
+            
+            // Check if it's Monday (1), Tuesday (2), Wednesday (3), Thursday (4), or Friday (5)
+            if (dayOfWeek >= 0 && dayOfWeek <= 4) {
+                alert('Consultations are available on weekends only (Saturday & Sunday).');
+                return;
+            }
+            
+            // Format date for display (e.g., Saturday, January 15, 2025)
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = new Date(preferredDate + 'T00:00:00').toLocaleDateString('en-US', dateOptions);
+            
+            // Format time for display (convert 24hr to 12hr format)
+            const [hours, minutes] = preferredTime.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour % 12 || 12;
+            const formattedTime = `${hour12}:${minutes} ${ampm}`;
+            
+            // Create WhatsApp message with new format
+            const message = `Hello The Skin Investor 🌿
 
 I would like to book a skincare consultation.
 
 Name: ${fullName}
 Location: ${location}
 
-I will make payment and complete the consultation form.
+Preferred Appointment:
+Date: ${formattedDate}
+Time: ${formattedTime}
+
+I will proceed with payment and complete the consultation form.
 
 Kindly confirm availability.
-
 Thank you.`;
             
             // Encode message for URL
             const encodedMessage = encodeURIComponent(message);
             
-            // WhatsApp phone number (remove any non-digit characters)
+            // WhatsApp phone number
             const phoneNumber = '233550718282';
             
             // Create WhatsApp URL
