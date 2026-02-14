@@ -144,7 +144,7 @@ Thank you.`;
             const encodedMessage = encodeURIComponent(message);
             
             // WhatsApp phone number
-            const phoneNumber = '233550718282';
+            const phoneNumber = '233261577159';
             
             // Create WhatsApp URL
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
