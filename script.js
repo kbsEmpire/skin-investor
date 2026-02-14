@@ -1,0 +1,364 @@
+/**
+ * THE SKIN INVESTOR - JAVASCRIPT
+ * ========================================
+ * Handles all interactive functionality
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ========================================
+    // PAGE LOADER
+    // ========================================
+    const loader = document.querySelector('.loader');
+    
+    // Hide loader after page loads
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            loader.classList.add('hidden');
+        }, 1500); // 1.5 second loader duration
+    });
+    
+    // Fallback: hide loader after max 3 seconds
+    setTimeout(function() {
+        loader.classList.add('hidden');
+    }, 3000);
+    
+    // ========================================
+    // FADE IN ON SCROLL ANIMATION
+    // ========================================
+    const fadeElements = document.querySelectorAll('.fade-in');
+    
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: stop observing once visible
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all fade-in elements
+    fadeElements.forEach(function(element) {
+        observer.observe(element);
+    });
+    
+    // ========================================
+    // SMOOTH SCROLLING FOR ANCHOR LINKS
+    // ========================================
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Skip if it's just "#"
+            if (href === '#') return;
+            
+            const target = document.querySelector(href);
+            
+            if (target) {
+                e.preventDefault();
+                
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // ========================================
+    // WHATSAPP BOOKING FORM
+    // ========================================
+    const bookingForm = document.getElementById('bookingForm');
+    
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value.trim();
+            const location = document.getElementById('location').value.trim();
+            
+            // Validate inputs
+            if (!fullName || !location) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Create WhatsApp message
+            const message = `Hello The Skin Investor 🌿,
+
+I would like to book a skincare consultation.
+
+Name: ${fullName}
+Location: ${location}
+
+I will make payment and complete the consultation form.
+
+Kindly confirm availability.
+
+Thank you.`;
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // WhatsApp phone number (remove any non-digit characters)
+            const phoneNumber = '233550718282';
+            
+            // Create WhatsApp URL
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappUrl, '_blank');
+        });
+    }
+    
+    // ========================================
+    // NAVBAR SCROLL EFFECT (Optional Enhancement)
+    // ========================================
+    let lastScroll = 0;
+    const navbar = document.querySelector('.navbar');
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        // Add scrolled class for navbar styling
+        if (currentScroll > 50) {
+            document.body.classList.add('scrolled');
+        } else {
+            document.body.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+    
+    // ========================================
+    // PARALLAX EFFECT FOR HERO (Optional Enhancement)
+    // ========================================
+    const hero = document.querySelector('.hero');
+    
+    if (hero) {
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.pageYOffset;
+            const heroHeight = hero.offsetHeight;
+            
+            // Only apply parallax if hero is in view
+            if (scrollPosition < heroHeight) {
+                hero.style.backgroundPositionY = (scrollPosition * 0.5) + 'px';
+            }
+        });
+    }
+    
+    // ========================================
+    // ACTIVE LINK HIGHLIGHTING (Optional Enhancement)
+    // ========================================
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    window.addEventListener('scroll', function() {
+        let current = '';
+        
+        sections.forEach(function(section) {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(function(link) {
+            link.classList.remove('active');
+            
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+    
+    // ========================================
+    // FORM INPUT VALIDATION FEEDBACK
+    // ========================================
+    const formInputs = document.querySelectorAll('.booking-form input');
+    
+    formInputs.forEach(function(input) {
+        // Add visual feedback on focus
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        // Remove visual feedback on blur
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+        
+        // Validate on input change
+        input.addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                this.classList.add('valid');
+            } else {
+                this.classList.remove('valid');
+            }
+        });
+    });
+    
+    // ========================================
+    // SCROLL TO TOP BUTTON (Optional Enhancement)
+    // ========================================
+    // Create scroll to top button
+    const scrollTopBtn = document.createElement('a');
+    scrollTopBtn.href = '#home';
+    scrollTopBtn.className = 'scroll-top';
+    scrollTopBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+    scrollTopBtn.setAttribute('aria-label', 'Scroll to top');
+    
+    // Style the button
+    Object.assign(scrollTopBtn.style, {
+        position: 'fixed',
+        bottom: '100px',
+        right: '30px',
+        width: '50px',
+        height: '50px',
+        background: 'linear-gradient(135deg, #D4AF37 0%, #C9A227 100%)',
+        color: '#FFFFFF',
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '20px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+        zIndex: '999',
+        opacity: '0',
+        visibility: 'hidden',
+        transition: 'all 0.3s ease'
+    });
+    
+    document.body.appendChild(scrollTopBtn);
+    
+    // Show/hide scroll to top button
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 500) {
+            scrollTopBtn.style.opacity = '1';
+            scrollTopBtn.style.visibility = 'visible';
+        } else {
+            scrollTopBtn.style.opacity = '0';
+            scrollTopBtn.style.visibility = 'hidden';
+        }
+    });
+    
+    // ========================================
+    // KEYBOARD ACCESSIBILITY
+    // ========================================
+    document.addEventListener('keydown', function(e) {
+        // Allow Escape to close any open modals (if added later)
+        if (e.key === 'Escape') {
+            // Close any open elements
+        }
+        
+        // Enter key triggers button clicks on links
+        if (e.key === 'Enter' && e.target.tagName === 'A') {
+            e.target.click();
+        }
+    });
+    
+    // ========================================
+    // PERFORMANCE: REDUCE MOTION FOR USERS WHO PREFER IT
+    // ========================================
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    if (prefersReducedMotion.matches) {
+        // Remove animations for users who prefer reduced motion
+        document.querySelectorAll('.fade-in').forEach(function(el) {
+            el.classList.add('visible');
+            el.style.transition = 'none';
+        });
+        
+        document.querySelector('.loader').classList.add('hidden');
+        document.querySelector('.scroll-indicator').style.display = 'none';
+    }
+    
+    // ========================================
+    // DEBUG: CONSOLE WELCOME MESSAGE
+    // ========================================
+    console.log('%c🌿 The Skin Investor', 'font-size: 24px; font-weight: bold; color: #D4AF37;');
+    console.log('%cPersonalized Skincare Consultation', 'font-size: 14px; color: #666;');
+    console.log('%cThank you for visiting!', 'font-size: 12px; color: #999;');
+    
+});
+
+// ========================================
+// UTILITY FUNCTIONS
+// ========================================
+
+/**
+ * Debounce function for performance
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+/**
+ * Throttle function for scroll events
+ */
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+/**
+ * Smooth scroll to element
+ */
+function smoothScrollTo(element, duration) {
+    const targetPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+    
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const run = ease(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+    
+    function ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+    
+    requestAnimationFrame(animation);
+}
+
+/**
+ * Format phone number for WhatsApp
+ */
+function formatPhoneForWhatsApp(phone) {
+    // Remove all non-digit characters
+    return phone.replace(/\D/g, '');
+}
+

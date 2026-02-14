@@ -1,0 +1,957 @@
+/* ========================================
+   THE SKIN INVESTOR - STYLESHEET
+   ======================================== */
+
+/* ========================================
+   CSS VARIABLES
+   ======================================== */
+:root {
+    /* Primary Colors */
+    --white: #FFFFFF;
+    --soft-beige: #F5F0E8;
+    --light-gold: #D4AF37;
+    --soft-gold: #E8D5A3;
+    --soft-green: #8FBC8F;
+    --dark-green: #2F4F4F;
+    
+    /* Text Colors */
+    --text-dark: #333333;
+    --text-light: #666666;
+    --text-muted: #999999;
+    
+    /* Accent Colors */
+    --accent-gold: #C9A227;
+    --accent-green: #6B8E6B;
+    
+    /* Background Colors */
+    --bg-white: #FFFFFF;
+    --bg-soft-beige: #F5F0E8;
+    --bg-light: #FAFAFA;
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --shadow-strong: 0 15px 50px rgba(0, 0, 0, 0.15);
+    
+    /* Border Radius */
+    --radius-small: 8px;
+    --radius-medium: 16px;
+    --radius-large: 24px;
+    --radius-round: 50%;
+    
+    /* Transitions */
+    --transition-fast: 0.3s ease;
+    --transition-medium: 0.5s ease;
+    --transition-slow: 0.8s ease;
+    
+    /* Fonts */
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Spacing */
+    --section-padding: 100px 20px;
+    --container-max: 1200px;
+}
+
+/* ========================================
+   RESET & BASE STYLES
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-white);
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-fast);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 35px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--radius-medium);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--light-gold) 0%, var(--accent-gold) 100%);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--text-dark);
+    border: 2px solid var(--soft-gold);
+}
+
+.btn-secondary:hover {
+    background: var(--soft-beige);
+    border-color: var(--light-gold);
+}
+
+.btn-instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: var(--white);
+}
+
+.btn-instagram:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(225, 48, 108, 0.4);
+}
+
+/* ========================================
+   PAGE LOADER
+   ======================================== */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--soft-beige);
+    border-top-color: var(--light-gold);
+    border-radius: var(--radius-round);
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.loader-content p {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--light-gold);
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   STICKY WHATSAPP FLOAT BUTTON
+   ======================================== */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    color: var(--white);
+    border-radius: var(--radius-round);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: var(--shadow-medium);
+    z-index: 1000;
+    transition: var(--transition-fast);
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-strong);
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: 
+        linear-gradient(135deg, rgba(245, 240, 232, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%),
+        url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 100px 20px;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(245, 240, 232, 0.5) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 800px;
+}
+
+.hero-text {
+    animation: fadeInUp 1s ease forwards;
+}
+
+.brand-name {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--text-dark) 0%, var(--light-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.4rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.hero .instagram-handle {
+    font-size: 1.1rem;
+    color: var(--soft-green);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.hero .instagram-handle i {
+    color: #E1306C;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+}
+
+.scroll-indicator i {
+    font-size: 2rem;
+    color: var(--light-gold);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+    40% { transform: translateX(-50%) translateY(-15px); }
+    60% { transform: translateX(-50%) translateY(-7px); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   PROCESS SECTION
+   ======================================== */
+.process {
+    padding: var(--section-padding);
+    background: var(--bg-soft-beige);
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.process-card {
+    background: var(--white);
+    padding: 40px 30px;
+    border-radius: var(--radius-large);
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.process-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--light-gold), var(--soft-green));
+}
+
+.process-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-strong);
+}
+
+.process-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--soft-beige) 0%, var(--white) 100%);
+    border-radius: var(--radius-round);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+}
+
+.process-icon i {
+    font-size: 2rem;
+    color: var(--light-gold);
+}
+
+.process-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+.process-card p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+.step-number {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--soft-beige);
+}
+
+/* ========================================
+   PAYMENT SECTION
+   ======================================== */
+.payment {
+    padding: var(--section-padding);
+    background: var(--white);
+}
+
+.payment-content {
+    display: grid;
+    gap: 40px;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.pricing-card {
+    background: var(--white);
+    border: 2px solid var(--soft-beige);
+    border-radius: var(--radius-large);
+    padding: 35px 25px;
+    text-align: center;
+    transition: var(--transition-fast);
+}
+
+.pricing-card:hover {
+    border-color: var(--light-gold);
+    box-shadow: var(--shadow-soft);
+    transform: translateY(-5px);
+}
+
+.pricing-header {
+    margin-bottom: 20px;
+}
+
+.pricing-header i {
+    font-size: 2rem;
+    color: var(--soft-green);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.pricing-header h3 {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-weight: 500;
+    font-family: var(--font-body);
+}
+
+.price {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--light-gold);
+}
+
+.payment-details {
+    display: grid;
+    gap: 30px;
+}
+
+.payment-methods,
+.benefits {
+    background: var(--soft-beige);
+    padding: 30px;
+    border-radius: var(--radius-large);
+}
+
+.payment-methods h3,
+.benefits h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.payment-methods h3 i {
+    color: var(--light-gold);
+}
+
+.benefits h3 i {
+    color: var(--soft-green);
+}
+
+.bank-details {
+    display: grid;
+    gap: 15px;
+}
+
+.bank-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--white);
+    border-radius: var(--radius-small);
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.bank-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.account-number {
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: var(--light-gold);
+    font-weight: 600;
+}
+
+.benefits ul {
+    display: grid;
+    gap: 12px;
+}
+
+.benefits li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.benefits li i {
+    color: var(--soft-green);
+    font-size: 1rem;
+}
+
+.important-notice {
+    background: linear-gradient(135deg, #FFF3CD 0%, #FFE69C 100%);
+    border: 2px solid #FFDA6A;
+    border-radius: var(--radius-large);
+    padding: 25px;
+}
+
+.important-notice h4 {
+    font-size: 1.1rem;
+    color: #856404;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.important-notice p {
+    color: #856404;
+    font-size: 0.95rem;
+}
+
+/* ========================================
+   BOOKING SECTION
+   ======================================== */
+.booking {
+    padding: var(--section-padding);
+    background: linear-gradient(180deg, var(--white) 0%, var(--soft-beige) 100%);
+}
+
+.booking-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 50px 40px;
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-medium);
+}
+
+.booking-form {
+    display: grid;
+    gap: 25px;
+}
+
+.form-group {
+    display: grid;
+    gap: 10px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group label i {
+    color: var(--light-gold);
+}
+
+.form-group input {
+    padding: 15px 20px;
+    border: 2px solid var(--soft-beige);
+    border-radius: var(--radius-medium);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: var(--transition-fast);
+    background: var(--bg-light);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--light-gold);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.btn-submit {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ========================================
+   GOOGLE FORM SECTION
+   ======================================== */
+.google-form-section {
+    padding: var(--section-padding);
+    background: var(--white);
+}
+
+.form-cta-card {
+    max-width: 700px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, var(--soft-beige) 0%, var(--white) 100%);
+    padding: 60px 40px;
+    border-radius: var(--radius-large);
+    text-align: center;
+    box-shadow: var(--shadow-medium);
+    border: 2px solid var(--soft-gold);
+}
+
+.form-cta-icon {
+    width: 100px;
+    height: 100px;
+    background: var(--white);
+    border-radius: var(--radius-round);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    box-shadow: var(--shadow-soft);
+}
+
+.form-cta-icon i {
+    font-size: 2.5rem;
+    color: var(--light-gold);
+}
+
+.form-cta-card h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.form-cta-card p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    line-height: 1.8;
+}
+
+/* ========================================
+   INSTAGRAM SECTION
+   ======================================== */
+.instagram-section {
+    padding: var(--section-padding);
+    background: linear-gradient(180deg, var(--soft-beige) 0%, var(--white) 100%);
+}
+
+.instagram-card {
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 50px 40px;
+    border-radius: var(--radius-large);
+    text-align: center;
+    box-shadow: var(--shadow-medium);
+}
+
+.instagram-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    border-radius: var(--radius-round);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+}
+
+.instagram-icon i {
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.instagram-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.instagram-card .instagram-handle {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+    background: var(--text-dark);
+    color: var(--white);
+    padding: 60px 20px 30px;
+}
+
+.footer-content {
+    display: grid;
+    gap: 30px;
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand h3 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.footer-brand p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-contact a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.footer-contact a:hover {
+    color: var(--light-gold);
+}
+
+.footer-contact a i {
+    font-size: 1.2rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+}
+
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   FADE IN ANIMATION
+   ======================================== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet */
+@media (max-width: 992px) {
+    .brand-name {
+        font-size: 3rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* Mobile Large */
+@media (max-width: 768px) {
+    :root {
+        --section-padding: 70px 15px;
+    }
+    
+    .brand-name {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+    
+    .hero {
+        padding: 80px 15px;
+    }
+    
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .booking-form-container {
+        padding: 30px 20px;
+    }
+    
+    .form-cta-card {
+        padding: 40px 25px;
+    }
+    
+    .whatsapp-float {
+        width: 55px;
+        height: 55px;
+        font-size: 26px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .brand-name {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .instagram-handle {
+        font-size: 0.9rem;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .price {
+        font-size: 2rem;
+    }
+    
+    .process-card {
+        padding: 30px 20px;
+    }
+    
+    .bank-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-content {
+        gap: 25px;
+    }
+}
+
+/* Extra Small */
+@media (max-width: 320px) {
+    .brand-name {
+        font-size: 1.8rem;
+    }
+    
+    .btn {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Landscape Orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 100px 20px;
+    }
+    
+    .scroll-indicator {
+        display: none;
+    }
+}
+
