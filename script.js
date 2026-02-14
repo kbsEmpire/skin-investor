@@ -142,79 +142,73 @@ preferredDateInput.setAttribute('min', today);
     if (bookingForm) {
         bookingForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+    
             // Get form values
             const fullName = document.getElementById('fullName').value.trim();
             const location = document.getElementById('location').value.trim();
             const preferredDate = document.getElementById('preferredDate').value;
             const preferredTime = document.getElementById('preferredTime').value;
-            
+    
             // Validate inputs
             if (!fullName || !location || !preferredDate || !preferredTime) {
                 alert('Please fill in all fields');
                 return;
             }
-            
-            // Validate weekend booking
-            // SAFELY parse selected date (avoid timezone issues)
-const dateParts = preferredDate.split('-'); 
-const year = parseInt(dateParts[0]);
-const month = parseInt(dateParts[1]) - 1; // Months are 0-indexed
-const day = parseInt(dateParts[2]);
-
-// Create date using local time (no UTC conversion)
-const selectedDate = new Date(year, month, day);
-const dayOfWeek = selectedDate.getDay();
-// 0 = Sunday, 6 = Saturday
-            
-            // Check if it's Monday (1), Tuesday (2), Wednesday (3), Thursday (4), or Friday (5)
+    
+            // Validate weekend booking safely
+            const [year, month, day] = preferredDate.split('-').map(Number);
+            const selectedDate = new Date(year, month - 1, day);
+            const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
+    
             if (dayOfWeek >= 1 && dayOfWeek <= 5) {
                 alert('Consultations are available on weekends only (Saturday & Sunday).');
                 return;
             }
-            
-            // Format date for display (e.g., Saturday, January 15, 2025)
+    
+            // Format date & time for WhatsApp message
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const formattedDate = new Date(preferredDate + 'T00:00:00').toLocaleDateString('en-US', dateOptions);
-            
-            // Format time for display (convert 24hr to 12hr format)
+            const formattedDate = selectedDate.toLocaleDateString('en-US', dateOptions);
+    
             const [hours, minutes] = preferredTime.split(':');
             const hour = parseInt(hours);
             const ampm = hour >= 12 ? 'PM' : 'AM';
             const hour12 = hour % 12 || 12;
             const formattedTime = `${hour12}:${minutes} ${ampm}`;
-            
-            // Create WhatsApp message with new format
+    
+            // Create WhatsApp message
             const message = `Hello The Skin Investor 🌿
-
-I would like to book a skincare consultation.
-
-Name: ${fullName}
-Location: ${location}
-
-Preferred Appointment:
-Date: ${formattedDate}
-Time: ${formattedTime}
-
-I will proceed with payment and complete the consultation form.
-
-Kindly confirm availability.
-Thank you.`;
-            
-            // Encode message for URL
+    
+    I would like to book a skincare consultation.
+    
+    Name: ${fullName}
+    Location: ${location}
+    
+    Preferred Appointment:
+    Date: ${formattedDate}
+    Time: ${formattedTime}
+    
+    I will proceed with payment and complete the consultation form.
+    
+    Kindly confirm availability.
+    Thank you.`;
+    
             const encodedMessage = encodeURIComponent(message);
-            
-            // WhatsApp phone number
             const phoneNumber = '233261577159';
-            
-            // Create WhatsApp URL
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            
-            // Open WhatsApp in new tab
-            window.open(whatsappUrl, '_blank');
+    
+            // Show success modal
+            const modal = document.getElementById('successModal');
+            modal.classList.add('show');
+    
+            // Wait 2 seconds, then redirect to WhatsApp and hide modal
+            setTimeout(function() {
+                window.open(whatsappUrl, '_blank');
+                modal.classList.remove('show');
+            }, 2000);
         });
     }
     
+
     // ========================================
     // NAVBAR SCROLL EFFECT (Optional Enhancement)
     // ========================================
