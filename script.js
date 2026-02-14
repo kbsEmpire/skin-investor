@@ -129,7 +129,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set minimum date to today (block past dates)
     if (preferredDateInput) {
-        const today = new Date().toISOString().split('T')[0];
+        const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, '0');
+const day = String(now.getDate()).padStart(2, '0');
+const today = `${year}-${month}-${day}`;
+
+preferredDateInput.setAttribute('min', today);
         preferredDateInput.setAttribute('min', today);
     }
     
@@ -150,8 +156,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Validate weekend booking
-            const selectedDate = new Date(preferredDate);
-            const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
+            // SAFELY parse selected date (avoid timezone issues)
+const dateParts = preferredDate.split('-'); 
+const year = parseInt(dateParts[0]);
+const month = parseInt(dateParts[1]) - 1; // Months are 0-indexed
+const day = parseInt(dateParts[2]);
+
+// Create date using local time (no UTC conversion)
+const selectedDate = new Date(year, month, day);
+const dayOfWeek = selectedDate.getDay();
+// 0 = Sunday, 6 = Saturday
             
             // Check if it's Monday (1), Tuesday (2), Wednesday (3), Thursday (4), or Friday (5)
             if (dayOfWeek >= 1 && dayOfWeek <= 5) {
