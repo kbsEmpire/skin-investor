@@ -1,56 +1,84 @@
 /* ========================================
-   THE SKIN INVESTOR - STYLESHEET
+   THE SKIN INVESTOR - PREMIUM STYLESHEET
    ======================================== */
 
 /* ========================================
-   CSS VARIABLES
+   CSS VARIABLES - LIGHT THEME (DEFAULT)
    ======================================== */
 :root {
-    /* Primary Colors */
+    /* Colors */
+    --bg-color: #FAF8F5;
+    --card-bg: #FFFFFF;
+    --text-color: #2E2E2E;
+    --text-muted: #6B6B6B;
+    --primary-accent: #C6A96E;
+    --secondary-accent: #8CA89C;
+    
+    /* Legacy variables for compatibility */
     --white: #FFFFFF;
     --soft-beige: #F5F0E8;
-    --light-gold: #D4AF37;
+    --light-gold: #C6A96E;
     --soft-gold: #E8D5A3;
-    --soft-green: #8FBC8F;
+    --soft-green: #8CA89C;
     --dark-green: #2F4F4F;
-    
-    /* Text Colors */
-    --text-dark: #333333;
-    --text-light: #666666;
-    --text-muted: #999999;
-    
-    /* Accent Colors */
-    --accent-gold: #C9A227;
-    --accent-green: #6B8E6B;
-    
-    /* Background Colors */
+    --text-dark: #2E2E2E;
+    --text-light: #6B6B6B;
     --bg-white: #FFFFFF;
-    --bg-soft-beige: #F5F0E8;
+    --bg-soft-beige: #FAF8F5;
     --bg-light: #FAFAFA;
     
     /* Shadows */
-    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
-    --shadow-strong: 0 15px 50px rgba(0, 0, 0, 0.15);
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --shadow-strong: 0 15px 40px rgba(0, 0, 0, 0.05);
+    --shadow-premium: 0 15px 40px rgba(0, 0, 0, 0.05);
     
     /* Border Radius */
-    --radius-small: 8px;
+    --radius-small: 12px;
     --radius-medium: 16px;
-    --radius-large: 24px;
-    --radius-round: 50%;
+    --radius-large: 20px;
+    --radius-pill: 50px;
     
     /* Transitions */
     --transition-fast: 0.3s ease;
-    --transition-medium: 0.5s ease;
-    --transition-slow: 0.8s ease;
+    --transition-medium: 0.4s ease;
     
     /* Fonts */
     --font-heading: 'Playfair Display', Georgia, serif;
-    --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     
     /* Spacing */
     --section-padding: 100px 20px;
     --container-max: 1200px;
+}
+
+/* ========================================
+   DARK THEME VARIABLES
+   ======================================== */
+body.dark-mode {
+    --bg-color: #121212;
+    --card-bg: #1E1E1E;
+    --text-color: #F1F1F1;
+    --text-muted: #A0A0A0;
+    --primary-accent: #D4B77C;
+    --secondary-accent: #7A9C90;
+    
+    /* Legacy variables */
+    --white: #1E1E1E;
+    --soft-beige: #2A2A2A;
+    --light-gold: #D4B77C;
+    --soft-gold: #3D3D3D;
+    --soft-green: #7A9C90;
+    --text-dark: #F1F1F1;
+    --text-light: #A0A0A0;
+    --bg-white: #1E1E1E;
+    --bg-soft-beige: #181818;
+    --bg-light: #252525;
+    
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.2);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.25);
+    --shadow-strong: 0 15px 40px rgba(0, 0, 0, 0.3);
+    --shadow-premium: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* ========================================
@@ -69,9 +97,10 @@ html {
 body {
     font-family: var(--font-body);
     font-size: 16px;
-    line-height: 1.6;
-    color: var(--text-dark);
-    background-color: var(--bg-white);
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: background 0.4s ease, color 0.4s ease;
     overflow-x: hidden;
 }
 
@@ -79,7 +108,8 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 600;
     line-height: 1.3;
-    color: var(--text-dark);
+    color: var(--text-color);
+    transition: color 0.4s ease;
 }
 
 a {
@@ -98,6 +128,38 @@ img {
 }
 
 /* ========================================
+   THEME TOGGLE BUTTON
+   ======================================== */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: var(--card-bg);
+    color: var(--primary-accent);
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: var(--shadow-medium);
+    z-index: 1001;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-strong);
+}
+
+body.dark-mode .theme-toggle {
+    color: var(--primary-accent);
+}
+
+/* ========================================
    UTILITY CLASSES
    ======================================== */
 .container {
@@ -107,17 +169,17 @@ img {
 }
 
 .section-title {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     text-align: center;
     margin-bottom: 15px;
-    color: var(--text-dark);
+    color: var(--text-color);
 }
 
 .section-subtitle {
     text-align: center;
     font-size: 1.1rem;
-    color: var(--text-light);
-    margin-bottom: 50px;
+    color: var(--text-muted);
+    margin-bottom: 60px;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
@@ -131,41 +193,41 @@ img {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 15px 35px;
+    padding: 16px 40px;
     font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 500;
-    border-radius: var(--radius-medium);
+    border-radius: var(--radius-pill);
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
     border: 2px solid transparent;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--light-gold) 0%, var(--accent-gold) 100%);
-    color: var(--white);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    background: linear-gradient(135deg, var(--primary-accent) 0%, #B8956A 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 15px rgba(198, 169, 110, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 8px 25px rgba(198, 169, 110, 0.4);
 }
 
 .btn-secondary {
-    background: var(--white);
-    color: var(--text-dark);
+    background: var(--card-bg);
+    color: var(--text-color);
     border: 2px solid var(--soft-gold);
 }
 
 .btn-secondary:hover {
     background: var(--soft-beige);
-    border-color: var(--light-gold);
+    border-color: var(--primary-accent);
 }
 
 .btn-instagram {
     background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    color: var(--white);
+    color: #FFFFFF;
 }
 
 .btn-instagram:hover {
@@ -182,7 +244,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--white);
+    background: var(--bg-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -203,8 +265,8 @@ img {
     width: 60px;
     height: 60px;
     border: 4px solid var(--soft-beige);
-    border-top-color: var(--light-gold);
-    border-radius: var(--radius-round);
+    border-top-color: var(--primary-accent);
+    border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto 20px;
 }
@@ -212,7 +274,7 @@ img {
 .loader-content p {
     font-family: var(--font-heading);
     font-size: 1.5rem;
-    color: var(--light-gold);
+    color: var(--primary-accent);
 }
 
 @keyframes spin {
@@ -229,15 +291,15 @@ img {
     width: 60px;
     height: 60px;
     background: #25D366;
-    color: var(--white);
-    border-radius: var(--radius-round);
+    color: #FFFFFF;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 30px;
     box-shadow: var(--shadow-medium);
     z-index: 1000;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
 .whatsapp-float:hover {
@@ -255,12 +317,18 @@ img {
     align-items: center;
     justify-content: center;
     background: 
-        linear-gradient(135deg, rgba(245, 240, 232, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%),
+        linear-gradient(135deg, rgba(250, 248, 245, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%),
         url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     padding: 100px 20px;
+}
+
+body.dark-mode .hero {
+    background: 
+        linear-gradient(135deg, rgba(18, 18, 18, 0.95) 0%, rgba(30, 30, 30, 0.9) 100%),
+        url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
 }
 
 .hero-overlay {
@@ -269,7 +337,11 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(245, 240, 232, 0.5) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(250, 248, 245, 0.4) 100%);
+}
+
+body.dark-mode .hero-overlay {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(18, 18, 18, 0.3) 100%);
 }
 
 .hero-content {
@@ -284,10 +356,10 @@ img {
 }
 
 .brand-name {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 700;
     margin-bottom: 20px;
-    background: linear-gradient(135deg, var(--text-dark) 0%, var(--light-gold) 100%);
+    background: linear-gradient(135deg, var(--text-color) 0%, var(--primary-accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -295,14 +367,14 @@ img {
 
 .subtitle {
     font-size: 1.4rem;
-    color: var(--text-light);
+    color: var(--text-muted);
     margin-bottom: 15px;
     font-weight: 400;
 }
 
 .hero .instagram-handle {
     font-size: 1.1rem;
-    color: var(--soft-green);
+    color: var(--secondary-accent);
     margin-bottom: 40px;
     display: flex;
     align-items: center;
@@ -331,7 +403,7 @@ img {
 
 .scroll-indicator i {
     font-size: 2rem;
-    color: var(--light-gold);
+    color: var(--primary-accent);
 }
 
 @keyframes bounce {
@@ -356,7 +428,8 @@ img {
    ======================================== */
 .process {
     padding: var(--section-padding);
-    background: var(--bg-soft-beige);
+    background: var(--bg-color);
+    transition: background 0.4s ease;
 }
 
 .process-grid {
@@ -366,12 +439,12 @@ img {
 }
 
 .process-card {
-    background: var(--white);
+    background: var(--card-bg);
     padding: 40px 30px;
     border-radius: var(--radius-large);
     text-align: center;
-    box-shadow: var(--shadow-soft);
-    transition: var(--transition-fast);
+    box-shadow: var(--shadow-premium);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
@@ -383,7 +456,7 @@ img {
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, var(--light-gold), var(--soft-green));
+    background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
 }
 
 .process-card:hover {
@@ -394,8 +467,8 @@ img {
 .process-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, var(--soft-beige) 0%, var(--white) 100%);
-    border-radius: var(--radius-round);
+    background: linear-gradient(135deg, var(--soft-beige) 0%, var(--card-bg) 100%);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -404,18 +477,18 @@ img {
 
 .process-icon i {
     font-size: 2rem;
-    color: var(--light-gold);
+    color: var(--primary-accent);
 }
 
 .process-card h3 {
     font-size: 1.3rem;
     margin-bottom: 15px;
-    color: var(--text-dark);
+    color: var(--text-color);
 }
 
 .process-card p {
     font-size: 0.95rem;
-    color: var(--text-light);
+    color: var(--text-muted);
     line-height: 1.7;
 }
 
@@ -434,7 +507,8 @@ img {
    ======================================== */
 .payment {
     padding: var(--section-padding);
-    background: var(--white);
+    background: var(--bg-color);
+    transition: background 0.4s ease;
 }
 
 .payment-content {
@@ -449,16 +523,16 @@ img {
 }
 
 .pricing-card {
-    background: var(--white);
+    background: var(--card-bg);
     border: 2px solid var(--soft-beige);
     border-radius: var(--radius-large);
     padding: 35px 25px;
     text-align: center;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
 .pricing-card:hover {
-    border-color: var(--light-gold);
+    border-color: var(--primary-accent);
     box-shadow: var(--shadow-soft);
     transform: translateY(-5px);
 }
@@ -469,14 +543,14 @@ img {
 
 .pricing-header i {
     font-size: 2rem;
-    color: var(--soft-green);
+    color: var(--secondary-accent);
     margin-bottom: 15px;
     display: block;
 }
 
 .pricing-header h3 {
     font-size: 1.1rem;
-    color: var(--text-light);
+    color: var(--text-muted);
     font-weight: 500;
     font-family: var(--font-body);
 }
@@ -485,7 +559,7 @@ img {
     font-family: var(--font-heading);
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--light-gold);
+    color: var(--primary-accent);
 }
 
 .payment-details {
@@ -495,9 +569,11 @@ img {
 
 .payment-methods,
 .benefits {
-    background: var(--soft-beige);
+    background: var(--card-bg);
     padding: 30px;
     border-radius: var(--radius-large);
+    box-shadow: var(--shadow-premium);
+    transition: all 0.3s ease;
 }
 
 .payment-methods h3,
@@ -510,11 +586,11 @@ img {
 }
 
 .payment-methods h3 i {
-    color: var(--light-gold);
+    color: var(--primary-accent);
 }
 
 .benefits h3 i {
-    color: var(--soft-green);
+    color: var(--secondary-accent);
 }
 
 .bank-details {
@@ -527,21 +603,22 @@ img {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background: var(--white);
+    background: var(--bg-light);
     border-radius: var(--radius-small);
     flex-wrap: wrap;
     gap: 10px;
+    transition: all 0.3s ease;
 }
 
 .bank-name {
     font-weight: 500;
-    color: var(--text-dark);
+    color: var(--text-color);
 }
 
 .account-number {
     font-family: monospace;
     font-size: 1.1rem;
-    color: var(--light-gold);
+    color: var(--primary-accent);
     font-weight: 600;
 }
 
@@ -555,11 +632,11 @@ img {
     align-items: center;
     gap: 12px;
     font-size: 1rem;
-    color: var(--text-dark);
+    color: var(--text-color);
 }
 
 .benefits li i {
-    color: var(--soft-green);
+    color: var(--secondary-accent);
     font-size: 1rem;
 }
 
@@ -568,6 +645,11 @@ img {
     border: 2px solid #FFDA6A;
     border-radius: var(--radius-large);
     padding: 25px;
+}
+
+body.dark-mode .important-notice {
+    background: linear-gradient(135deg, #3D3520 0%, #4A4025 100%);
+    border-color: #5C4F2A;
 }
 
 .important-notice h4 {
@@ -579,9 +661,17 @@ img {
     gap: 10px;
 }
 
+body.dark-mode .important-notice h4 {
+    color: #D4B77C;
+}
+
 .important-notice p {
     color: #856404;
     font-size: 0.95rem;
+}
+
+body.dark-mode .important-notice p {
+    color: #C9B896;
 }
 
 /* ========================================
@@ -589,16 +679,18 @@ img {
    ======================================== */
 .booking {
     padding: var(--section-padding);
-    background: linear-gradient(180deg, var(--white) 0%, var(--soft-beige) 100%);
+    background: linear-gradient(180deg, var(--bg-color) 0%, var(--soft-beige) 100%);
+    transition: background 0.4s ease;
 }
 
 .booking-form-container {
     max-width: 600px;
     margin: 0 auto;
-    background: var(--white);
+    background: var(--card-bg);
     padding: 50px 40px;
     border-radius: var(--radius-large);
-    box-shadow: var(--shadow-medium);
+    box-shadow: var(--shadow-premium);
+    transition: all 0.3s ease;
 }
 
 .booking-form {
@@ -613,40 +705,37 @@ img {
 
 .form-group label {
     font-weight: 500;
-    color: var(--text-dark);
+    color: var(--text-color);
     display: flex;
     align-items: center;
     gap: 10px;
+    transition: color 0.4s ease;
 }
 
 .form-group label i {
-    color: var(--light-gold);
+    color: var(--primary-accent);
 }
 
 .form-group input {
     padding: 15px 20px;
     border: 2px solid var(--soft-beige);
-    border-radius: var(--radius-medium);
+    border-radius: var(--radius-small);
     font-family: var(--font-body);
     font-size: 1rem;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
     background: var(--bg-light);
+    color: var(--text-color);
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--light-gold);
-    background: var(--white);
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+    border-color: var(--primary-accent);
+    background: var(--card-bg);
+    box-shadow: 0 0 0 4px rgba(198, 169, 110, 0.15);
 }
 
 .form-group input::placeholder {
     color: var(--text-muted);
-}
-
-.btn-submit {
-    width: 100%;
-    margin-top: 10px;
 }
 
 /* Form Row - Side by side on desktop */
@@ -663,40 +752,42 @@ img {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23D4AF37' d='M6 0C2.7 0 0 2.7 0 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 11c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23C6A96E' d='M6 0C2.7 0 0 2.7 0 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 11c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 15px center;
     padding-right: 40px;
 }
 
+body.dark-mode .form-group input[type="date"],
+body.dark-mode .form-group input[type="time"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23D4B77C' d='M6 0C2.7 0 0 2.7 0 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 11c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z'/%3E%3C/svg%3E");
+}
+
 .form-group input[type="date"]:focus,
 .form-group input[type="time"]:focus {
     outline: none;
-    border-color: var(--light-gold);
-    background-color: var(--white);
-    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+    border-color: var(--primary-accent);
+    background-color: var(--card-bg);
+    box-shadow: 0 0 0 4px rgba(198, 169, 110, 0.15);
 }
 
-/* Custom calendar icon for date input */
-.form-group input[type="date"]::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
+/* Helper Text */
+.helper-text {
+    font-size: 0.9rem;
+    color: var(--secondary-accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.4s ease;
 }
 
-.form-group input[type="date"]::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
+.helper-text i {
+    font-size: 0.85rem;
 }
 
-/* Custom time icon for time input */
-.form-group input[type="time"]::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.2s ease;
-}
-
-.form-group input[type="time"]::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
+.btn-submit {
+    width: 100%;
+    margin-top: 10px;
 }
 
 /* ========================================
@@ -704,25 +795,27 @@ img {
    ======================================== */
 .google-form-section {
     padding: var(--section-padding);
-    background: var(--white);
+    background: var(--bg-color);
+    transition: background 0.4s ease;
 }
 
 .form-cta-card {
     max-width: 700px;
     margin: 0 auto;
-    background: linear-gradient(135deg, var(--soft-beige) 0%, var(--white) 100%);
+    background: var(--card-bg);
     padding: 60px 40px;
     border-radius: var(--radius-large);
     text-align: center;
-    box-shadow: var(--shadow-medium);
+    box-shadow: var(--shadow-premium);
     border: 2px solid var(--soft-gold);
+    transition: all 0.3s ease;
 }
 
 .form-cta-icon {
     width: 100px;
     height: 100px;
-    background: var(--white);
-    border-radius: var(--radius-round);
+    background: var(--card-bg);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -732,7 +825,7 @@ img {
 
 .form-cta-icon i {
     font-size: 2.5rem;
-    color: var(--light-gold);
+    color: var(--primary-accent);
 }
 
 .form-cta-card h2 {
@@ -742,7 +835,7 @@ img {
 
 .form-cta-card p {
     font-size: 1.1rem;
-    color: var(--text-light);
+    color: var(--text-muted);
     margin-bottom: 30px;
     line-height: 1.8;
 }
@@ -752,24 +845,30 @@ img {
    ======================================== */
 .instagram-section {
     padding: var(--section-padding);
-    background: linear-gradient(180deg, var(--soft-beige) 0%, var(--white) 100%);
+    background: var(--soft-beige);
+    transition: background 0.4s ease;
+}
+
+body.dark-mode .instagram-section {
+    background: #1A1A1A;
 }
 
 .instagram-card {
     max-width: 500px;
     margin: 0 auto;
-    background: var(--white);
+    background: var(--card-bg);
     padding: 50px 40px;
     border-radius: var(--radius-large);
     text-align: center;
-    box-shadow: var(--shadow-medium);
+    box-shadow: var(--shadow-premium);
+    transition: all 0.3s ease;
 }
 
 .instagram-icon {
     width: 80px;
     height: 80px;
     background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    border-radius: var(--radius-round);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -778,7 +877,7 @@ img {
 
 .instagram-icon i {
     font-size: 2rem;
-    color: var(--white);
+    color: #FFFFFF;
 }
 
 .instagram-card h2 {
@@ -788,7 +887,7 @@ img {
 
 .instagram-card .instagram-handle {
     font-size: 1.3rem;
-    color: var(--text-light);
+    color: var(--text-muted);
     margin-bottom: 30px;
 }
 
@@ -797,8 +896,13 @@ img {
    ======================================== */
 .footer {
     background: var(--text-dark);
-    color: var(--white);
+    color: #FFFFFF;
     padding: 60px 20px 30px;
+    transition: background 0.4s ease;
+}
+
+body.dark-mode .footer {
+    background: #0A0A0A;
 }
 
 .footer-content {
@@ -812,7 +916,7 @@ img {
 .footer-brand h3 {
     font-family: var(--font-heading);
     font-size: 1.8rem;
-    color: var(--white);
+    color: #FFFFFF;
     margin-bottom: 10px;
 }
 
@@ -833,11 +937,11 @@ img {
     gap: 10px;
     color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
 }
 
 .footer-contact a:hover {
-    color: var(--light-gold);
+    color: var(--primary-accent);
 }
 
 .footer-contact a i {
@@ -875,7 +979,7 @@ img {
 /* Tablet */
 @media (max-width: 992px) {
     .brand-name {
-        font-size: 3rem;
+        font-size: 3.2rem;
     }
     
     .subtitle {
@@ -883,7 +987,7 @@ img {
     }
     
     .section-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     
     .hero-buttons {
@@ -893,27 +997,27 @@ img {
     
     .btn {
         width: 100%;
-        max-width: 300px;
+        max-width: 320px;
     }
 }
 
 /* Mobile Large */
 @media (max-width: 768px) {
     :root {
-        --section-padding: 70px 15px;
+        --section-padding: 80px 15px;
     }
     
     .brand-name {
-        font-size: 2.5rem;
+        font-size: 2.6rem;
     }
     
     .section-title {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
     
     .section-subtitle {
         font-size: 1rem;
-        margin-bottom: 40px;
+        margin-bottom: 50px;
     }
     
     .hero {
@@ -929,14 +1033,14 @@ img {
     }
     
     .booking-form-container {
-        padding: 30px 20px;
+        padding: 35px 25px;
     }
     
     .form-cta-card {
-        padding: 40px 25px;
+        padding: 45px 30px;
     }
     
-.whatsapp-float {
+    .whatsapp-float {
         width: 55px;
         height: 55px;
         font-size: 26px;
@@ -948,12 +1052,20 @@ img {
     .form-row {
         grid-template-columns: 1fr;
     }
+    
+    /* Adjust theme toggle for mobile */
+    .theme-toggle {
+        top: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
 }
 
 /* Mobile Small */
 @media (max-width: 480px) {
     .brand-name {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     
     .subtitle {
@@ -984,17 +1096,23 @@ img {
     .footer-content {
         gap: 25px;
     }
+    
+    .theme-toggle {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
 }
 
 /* Extra Small */
 @media (max-width: 320px) {
     .brand-name {
-        font-size: 1.8rem;
+        font-size: 1.9rem;
     }
     
     .btn {
-        padding: 12px 25px;
-        font-size: 0.9rem;
+        padding: 14px 28px;
+        font-size: 0.95rem;
     }
 }
 
