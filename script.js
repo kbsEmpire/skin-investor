@@ -1,7 +1,7 @@
 /**
  * THE SKIN INVESTOR - JAVASCRIPT
  * ========================================
- * Handles all interactive functionality
+ * Handles all interactive functionality including theme toggle
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -22,6 +22,53 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() {
         loader.classList.add('hidden');
     }, 3000);
+    
+    // ========================================
+    // THEME TOGGLE FUNCTIONALITY
+    // ========================================
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Apply saved theme on page load
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        updateThemeIcon(true);
+    } else {
+        // Default to light mode
+        body.classList.remove('dark-mode');
+        updateThemeIcon(false);
+    }
+    
+    // Toggle theme on button click
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            
+            // Check if dark mode is now active
+            const isDarkMode = body.classList.contains('dark-mode');
+            
+            // Save preference to localStorage
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            
+            // Update icon
+            updateThemeIcon(isDarkMode);
+        });
+    }
+    
+    // Function to update theme toggle icon
+    function updateThemeIcon(isDarkMode) {
+        if (themeToggle) {
+            const icon = themeToggle.querySelector('i');
+            if (isDarkMode) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+    }
     
     // ========================================
     // FADE IN ON SCROLL ANIMATION
@@ -260,7 +307,7 @@ Thank you.`;
         right: '30px',
         width: '50px',
         height: '50px',
-        background: 'linear-gradient(135deg, #D4AF37 0%, #C9A227 100%)',
+        background: 'linear-gradient(135deg, #C6A96E 0%, #B8956A 100%)',
         color: '#FFFFFF',
         borderRadius: '50%',
         display: 'flex',
@@ -321,7 +368,7 @@ Thank you.`;
     // ========================================
     // DEBUG: CONSOLE WELCOME MESSAGE
     // ========================================
-    console.log('%c🌿 The Skin Investor', 'font-size: 24px; font-weight: bold; color: #D4AF37;');
+    console.log('%c🌿 The Skin Investor', 'font-size: 24px; font-weight: bold; color: #C6A96E;');
     console.log('%cPersonalized Skincare Consultation', 'font-size: 14px; color: #666;');
     console.log('%cThank you for visiting!', 'font-size: 12px; color: #999;');
     
