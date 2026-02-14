@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
             
             // Check if it's Monday (1), Tuesday (2), Wednesday (3), Thursday (4), or Friday (5)
-            if (dayOfWeek >= 0 && dayOfWeek <= 4) {
+            if (dayOfWeek >= 1 && dayOfWeek <= 5) {
                 alert('Consultations are available on weekends only (Saturday & Sunday).');
                 return;
             }
