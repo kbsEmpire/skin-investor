@@ -211,6 +211,7 @@ preferredDateInput.setAttribute('min', today);
     }
     
     
+    
 
     // ========================================
     // NAVBAR SCROLL EFFECT (Optional Enhancement)
@@ -344,7 +345,24 @@ preferredDateInput.setAttribute('min', today);
             scrollTopBtn.style.visibility = 'hidden';
         }
     });
+
+
+    // Hide floating scroll indicator after scrolling
+const scrollIndicator = document.querySelector('.scroll-indicator');
+
+window.addEventListener('scroll', function() {
+    if (window.scrollY > 120) {
+        scrollIndicator.style.opacity = '0';
+        scrollIndicator.style.pointerEvents = 'none';
+    } else {
+        scrollIndicator.style.opacity = '1';
+        scrollIndicator.style.pointerEvents = 'auto';
+    }
+});
+
     
+
+
     // ========================================
     // KEYBOARD ACCESSIBILITY
     // ========================================
