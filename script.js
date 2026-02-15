@@ -165,17 +165,18 @@ preferredDateInput.setAttribute('min', today);
                 return;
             }
     
-            // Format date & time for WhatsApp message
+            // Format date
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const formattedDate = selectedDate.toLocaleDateString('en-US', dateOptions);
     
+            // Format time
             const [hours, minutes] = preferredTime.split(':');
             const hour = parseInt(hours);
             const ampm = hour >= 12 ? 'PM' : 'AM';
             const hour12 = hour % 12 || 12;
             const formattedTime = `${hour12}:${minutes} ${ampm}`;
     
-            // Create WhatsApp message
+            // WhatsApp message
             const message = `Hello The Skin Investor 🌿
     
     I would like to book a skincare consultation.
@@ -194,19 +195,21 @@ preferredDateInput.setAttribute('min', today);
     
             const encodedMessage = encodeURIComponent(message);
             const phoneNumber = '233261577159';
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     
-            // Show success modal
+            // iPhone-safe WhatsApp link
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+    
+            // Show success modal animation
             const modal = document.getElementById('successModal');
             modal.classList.add('show');
     
-            // Wait 2 seconds, then redirect to WhatsApp and hide modal
+            // Smooth redirect (works on ALL devices including iPhone)
             setTimeout(function() {
-                window.open(whatsappUrl, '_blank');
-                modal.classList.remove('show');
-            }, 2000);
+                window.location.href = whatsappUrl;
+            }, 1200);
         });
     }
+    
     
 
     // ========================================
