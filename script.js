@@ -146,6 +146,8 @@ preferredDateInput.setAttribute('min', today);
             // Get form values
             const fullName = document.getElementById('fullName').value.trim();
             const location = document.getElementById('location').value.trim();
+            const service = document.getElementById('service').value.trim();
+            const platform = document.getElementById('platform').value.trim();
             const preferredDate = document.getElementById('preferredDate').value;
             const preferredTime = document.getElementById('preferredTime').value;
     
@@ -183,12 +185,14 @@ preferredDateInput.setAttribute('min', today);
     
     Name: ${fullName}
     Location: ${location}
+    Service: ${service}
+    Platform: ${platform}
     
     Preferred Appointment:
     Date: ${formattedDate}
     Time: ${formattedTime}
     
-    I will proceed with payment and complete the consultation form.
+    I will proceed with payment and complete the process.
     
     Kindly confirm availability.
     Thank you.`;
@@ -346,8 +350,7 @@ preferredDateInput.setAttribute('min', today);
         }
     });
 
-
-    // Hide floating scroll indicator after scrolling
+        // Hide floating scroll indicator after scrolling
 const scrollIndicator = document.querySelector('.scroll-indicator');
 
 window.addEventListener('scroll', function() {
@@ -359,6 +362,210 @@ window.addEventListener('scroll', function() {
         scrollIndicator.style.pointerEvents = 'auto';
     }
 });
+
+
+
+// ========================================
+    // SERVICE MODALS FUNCTIONALITY
+    // ========================================
+    const serviceModals = document.querySelectorAll('.service-learn-more');
+    const serviceModal = document.getElementById('serviceModal');
+    const serviceTitle = document.getElementById('serviceTitle');
+    const serviceDescription = document.getElementById('serviceDescription');
+    const modalClose = document.querySelector('.modal-close');
+
+    // Service content mapping
+    const serviceContent = {
+        acne: {
+            title: 'Acne Treatment Consultation',
+            desc: 'Comprehensive assessment of acne type, severity, and triggers. Receive a customized protocol including cleansers, actives (retinoids, benzoyl peroxide, azelaic acid), and maintenance strategies. Includes lifestyle recommendations and progress tracking plan.'
+        },
+        hyperpigmentation: {
+            title: 'Hyperpigmentation Care',
+            desc: 'Targeted approach for melasma, PIH, and sun damage. Protocol features brightening agents (vitamin C, niacinamide, tranexamic acid), exfoliation, and sun protection strategies. Long-term even tone maintenance plan included.'
+        },
+        'anti-aging': {
+            title: 'Anti-Aging Routine Planning',
+            desc: 'Personalized prevention and correction protocol using retinoids, peptides, antioxidants, and barrier support. Skin laxity, fine lines, and texture analysis with progressive layering guidance and product rotation schedule.'
+        },
+        sensitive: {
+            title: 'Sensitive Skin Support',
+            desc: 'Barrier repair-focused consultation for redness, irritation, and reactivity. Gentle actives, microbiome support, and trigger identification. Complete soothing routine with emergency response protocols for flare-ups.'
+        },
+        hair: {
+            title: 'Hair & Scalp Consultation',
+            desc: 'Scalp health analysis addressing hair thinning, dandruff, and growth concerns. Customized protocol includes cleansing, treatment serums, nutrition guidance, and progress monitoring for optimal hair density and scalp condition.'
+        },
+        custom: {
+            title: 'Custom Skincare Routine Design',
+            desc: 'Bespoke regimen creation matching lifestyle, budget, and skin goals. Complete analysis of current routine, product compatibility testing, and phased implementation plan with adjustments for seasonal changes and progress.'
+        }
+    };
+
+    serviceModals.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const serviceKey = this.closest('.service-card').dataset.service;
+            const content = serviceContent[serviceKey];
+            
+            if (content) {
+                serviceTitle.textContent = content.title;
+                serviceDescription.innerHTML = `<p>${content.desc}</p>`;
+                serviceModal.classList.add('show');
+            }
+        });
+    });
+
+    // Close modal handlers
+    function closeServiceModal() {
+        serviceModal.classList.remove('show');
+    }
+
+    if (modalClose) {
+        modalClose.addEventListener('click', closeServiceModal);
+    }
+
+    serviceModal.addEventListener('click', function(e) {
+        if (e.target === serviceModal) {
+            closeServiceModal();
+        }
+    });
+
+    // ESC key close
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && serviceModal.classList.contains('show')) {
+            closeServiceModal();
+        }
+    });
+
+// ========================================
+// TESTIMONIALS CAROUSEL (FINAL VERSION)
+// ========================================
+
+const carouselTrack = document.querySelector('.carousel-track');
+const testimonialCards = document.querySelectorAll('.testimonial-card');
+const carouselPrev = document.querySelector('.carousel-prev');
+const carouselNext = document.querySelector('.carousel-next');
+
+if (carouselTrack && testimonialCards.length > 0) {
+
+let currentIndex = 0;
+let autoSlideInterval;
+
+function getSlideWidth() {
+return testimonialCards[0].offsetWidth + 24;
+}
+
+function updateCarousel() {
+
+const slideWidth = getSlideWidth();
+
+carouselTrack.style.transform =
+`translateX(-${currentIndex * slideWidth}px)`;
+
+}
+
+function nextSlide() {
+
+currentIndex =
+(currentIndex + 1) % testimonialCards.length;
+
+updateCarousel();
+
+}
+
+function prevSlide() {
+
+currentIndex =
+(currentIndex - 1 + testimonialCards.length)
+% testimonialCards.length;
+
+updateCarousel();
+
+}
+
+carouselNext?.addEventListener('click', () => {
+
+stopAutoSlide();
+nextSlide();
+startAutoSlide();
+
+});
+
+carouselPrev?.addEventListener('click', () => {
+
+stopAutoSlide();
+prevSlide();
+startAutoSlide();
+
+});
+
+function startAutoSlide() {
+
+stopAutoSlide();
+
+autoSlideInterval =
+setInterval(nextSlide, 3000);
+
+}
+
+function stopAutoSlide() {
+
+clearInterval(autoSlideInterval);
+
+}
+
+/* Pause on hover */
+
+const carouselWrapper =
+document.querySelector('.testimonial-carousel');
+
+carouselWrapper?.addEventListener(
+'mouseenter',
+stopAutoSlide
+);
+
+carouselWrapper?.addEventListener(
+'mouseleave',
+startAutoSlide
+);
+
+/* Swipe support */
+
+let startX = 0;
+
+carouselTrack.addEventListener(
+'touchstart',
+e => startX = e.touches[0].clientX
+);
+
+carouselTrack.addEventListener(
+'touchend',
+e => {
+
+let endX =
+e.changedTouches[0].clientX;
+
+if (startX - endX > 50) nextSlide();
+
+if (endX - startX > 50) prevSlide();
+
+}
+);
+
+/* Resize fix */
+
+window.addEventListener(
+'resize',
+updateCarousel
+);
+
+/* Init */
+
+updateCarousel();
+startAutoSlide();
+
+}
 
     
 
